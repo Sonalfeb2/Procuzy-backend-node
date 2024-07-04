@@ -18,17 +18,14 @@ app.post("/scrape", async (req, res) => {
     const browser = await puppeteer.launch({
       headless: true,
 
-      ignoreHTTPSErrors: true,
-
-      // add this
-      executablePath: executablePath(),
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-accelerated-2d-canvas',
-        '--disable-gpu'
-    ]
+      executablePath: '/usr/bin/google-chrome-stable', // Path for Chrome in Render environment
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--disable-gpu'
+            ]
   });
     const page = await browser.newPage();
     await page.goto(
