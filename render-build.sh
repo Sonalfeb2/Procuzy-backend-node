@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Install dependencies for Puppeteer
 apt-get update
 apt-get install -y wget gnupg
@@ -28,6 +29,9 @@ apt-get install -y \
   libxrandr2 \
   xdg-utils \
   --no-install-recommends
+
+# Install Chrome for Puppeteer
+npx puppeteer browsers install chrome
 
 # Clean up
 apt-get clean
