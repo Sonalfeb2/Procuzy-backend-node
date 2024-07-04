@@ -43,11 +43,10 @@ app.post("/scrape", async (req, res) => {
         const dataHref = dataHrefElement
           ? dataHrefElement.getAttribute("data-href")
           : null;
-
         articlesData.push({
           title: title,
           author: author,
-          date: date,
+          date: date.split('\n')[0],
           link: dataHref
         });
       });
