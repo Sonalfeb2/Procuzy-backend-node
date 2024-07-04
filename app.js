@@ -18,7 +18,7 @@ app.post("/scrape", async (req, res) => {
     const browser = await puppeteer.launch({
       headless: true,
 
-      executablePath: puppeteer.executablePath(),
+      executablePath: 'C:\Program Files\Google\Chrome\Application\chrome.exe',
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
