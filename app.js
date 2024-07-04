@@ -62,6 +62,9 @@ app.post("/scrape", async (req, res) => {
     res.status(500).send({ error: "Failed to scrape articles" });
   }
 });
+app.get('/',(req,res)=>{
+  res.send("APP is Running")
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
