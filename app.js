@@ -15,7 +15,7 @@ app.post("/scrape", async (req, res) => {
   }
 
   try {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(
       `https://medium.com/search?q=${encodeURIComponent(topic)}`,
