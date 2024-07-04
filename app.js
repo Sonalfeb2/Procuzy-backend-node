@@ -15,7 +15,16 @@ app.post("/scrape", async (req, res) => {
   }
 
   try {
-    const browser = await puppeteer.launch({ headless: false ,executablePath: '/path/to/Chrome'});
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--disable-gpu'
+    ]
+  });
     const page = await browser.newPage();
     await page.goto(
       `https://medium.com/search?q=${encodeURIComponent(topic)}`,
