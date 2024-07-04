@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const puppeteer = require("puppeteer");
-
+const {executablePath} = require("puppeteer")
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -16,9 +16,9 @@ app.post("/scrape", async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      headless: true,
-
-      executablePath: '/usr/bin/google-chrome', // Path for Chrome in Render environment
+      headless: false,
+      ignoreHTTPSErrors: true,
+      executablePath: executablePath(), // Path for Chrome in Render environment
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
