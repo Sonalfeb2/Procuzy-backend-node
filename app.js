@@ -18,7 +18,7 @@ app.post("/scrape", async (req, res) => {
     const browser = await puppeteer.launch({
       headless: true,
 
-      executablePath: '/usr/bin/google-chrome-stable', // Path for Chrome in Render environment
+      executablePath: '/usr/bin/google-chrome', // Path for Chrome in Render environment
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
