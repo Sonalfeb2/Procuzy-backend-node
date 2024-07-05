@@ -8,6 +8,8 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+
+let scrapedArticles = []; // In-memory storage for articles
 app.post("/scrape", async (req, res) => {
   const topic = req.body.topic;
   if (!topic) {
@@ -64,7 +66,7 @@ app.post("/scrape", async (req, res) => {
 
       return articlesData.filter(Boolean).slice(0, 5);
     })
-
+    scrapedArticles = articles; 
     await browser.close();
 
     res.send(articles);
@@ -76,6 +78,10 @@ app.post("/scrape", async (req, res) => {
 app.get('/',(req,res)=>{
   res.send("APP is Running")
 })
+app.get('/articles', (req, res) => {
+  res.send(scrapedArticles);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
