@@ -30,6 +30,9 @@ apt-get install -y \
   xdg-utils \
   --no-install-recommends
 
+# Install Chrome for Puppeteer
+npx puppeteer browsers install chrome
+
 # Clean up
 apt-get clean
 rm -rf /var/lib/apt/lists/*
