@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const puppeteer = require("puppeteer-core");
-const {executablePath} = require("puppeteer-core")
+const puppeteer = require("puppeteer");
+const {executablePath} = require("puppeteer")
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -10,16 +10,7 @@ app.use(express.json());
 
 
 let scrapedArticles = []; // In-memory storage for articles
-const getChromeExecutablePath = () => {
-  const isProduction = process.env.NODE_ENV === 'production';
-  if (isProduction) {
-      // In production, we assume Chrome is installed in a standard location
-      return '/usr/bin/google-chrome-stable';
-  } else {
-      // For development, use Puppeteer's built-in Chromium
-      return executablePath();
-  }
-};
+
 app.post("/scrape", async (req, res) => {
   const topic = req.body.topic;
   if (!topic) {
@@ -30,7 +21,7 @@ app.post("/scrape", async (req, res) => {
     const browser = await puppeteer.launch({
       headless: true,
       ignoreHTTPSErrors: true,
-      executablePath: getChromeExecutablePath(), // Path for Chrome in Render environment
+      executablePath: executablePath(), // Path for Chrome in Render environment
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
