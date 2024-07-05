@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-const puppeteer = require("puppeteer");
-const {executablePath} = require("puppeteer")
+const puppeteer = require("puppeteer-core");
+// const {executablePath} = require("puppeteer-core")
+
+const getChromeExecutablePath = require('./getExecutablePath');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -18,10 +20,10 @@ app.post("/scrape", async (req, res) => {
   }
 
   try {
-    const browser = await puppeteer.launch({
-      headless: true,
-      ignoreHTTPSErrors: true,
-      executablePath: executablePath(), // Path for Chrome in Render environment
+    const executablePath = getChromeExecutablePath();
+        const browser = await puppeteer.launch({
+            headless: true,
+            executablePath: executablePath,
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
@@ -29,7 +31,19 @@ app.post("/scrape", async (req, res) => {
                 '--disable-accelerated-2d-canvas',
                 '--disable-gpu'
             ]
-  });
+        });
+  //   const browser = await puppeteer.launch({
+  //     headless: true,
+  //     ignoreHTTPSErrors: true,
+  //     executablePath: executablePath(), // Path for Chrome in Render environment
+  //           args: [
+  //               '--no-sandbox',
+  //               '--disable-setuid-sandbox',
+  //               '--disable-dev-shm-usage',
+  //               '--disable-accelerated-2d-canvas',
+  //               '--disable-gpu'
+  //           ]
+  // });
     const page = await browser.newPage();
     await page.goto(
       `https://medium.com/search?q=${encodeURIComponent(topic)}`,
