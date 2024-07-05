@@ -10,6 +10,16 @@ app.use(express.json());
 
 
 let scrapedArticles = []; // In-memory storage for articles
+const getChromeExecutablePath = () => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  if (isProduction) {
+      // In production, we assume Chrome is installed in a standard location
+      return '/usr/bin/google-chrome-stable';
+  } else {
+      // For development, use Puppeteer's built-in Chromium
+      return executablePath();
+  }
+};
 app.post("/scrape", async (req, res) => {
   const topic = req.body.topic;
   if (!topic) {
@@ -20,7 +30,7 @@ app.post("/scrape", async (req, res) => {
     const browser = await puppeteer.launch({
       headless: true,
       ignoreHTTPSErrors: true,
-      executablePath: executablePath(), // Path for Chrome in Render environment
+      executablePath: getChromeExecutablePath(), // Path for Chrome in Render environment
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
